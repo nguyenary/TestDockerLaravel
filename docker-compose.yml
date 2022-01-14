@@ -31,6 +31,8 @@ services:
     phpmyadmin:
         container_name: phpmyadmin
         image: phpmyadmin/phpmyadmin:latest
+        depends_on:
+            - mysql
         ports:
             - '8087:80'
         environment:
@@ -38,7 +40,7 @@ services:
             PMA_HOST: 'mysql'
             PMA_USER: 'user'
             PMA_PASSWORD: 'password'
-    
+        restart: always
     nginx:
         container_name: my_nginx
         networks:
