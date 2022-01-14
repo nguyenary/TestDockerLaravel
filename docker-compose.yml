@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+    php:
+        container_name: my_php
+        image: php:7.4-fpm
+        networks:
+            - default
+        volumes:
+            - ./:/var/www
+        working_dir: /var/www
+        expose:
+            - '9000'
+    
+    mysql:
+        container_name: my_mysql
+        image: mysql:5.7
+        restart: always
+        environment:
+            MYSQL_DATABASE: 'db'
+            MYSQL_USER: 'user'
+            MYSQL_PASSWORD: 'password'
+            MYSQL_ROOT_PASSWORD: 'password'
+            MYSQL_ROOT_HOST: '%'
+        ports:
+            - '3306:3306'
+        expose:
+            - '3306'
+        volumes:
+            - ./my-db:/var/lib/mysql
+
+    nginx:
+        container_name: my_nginx
+        networks:
+            - default
+        depends_on:
+            - php
+        image: nginx:1.21.5
+        tty: true
+        ports:
+            - 8088:80
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+networks:
+    default:
+        driver: bridge
