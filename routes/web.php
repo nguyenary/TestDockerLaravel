@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', static function () {
     return view('welcome');
 });
 
-Route::get('/nguyen', function () {
+Route::get('/nguyen', static function () {
     return ['nguyen', 'pro'];
 });
+
+Route::get('/home', 'HomeController@show');
