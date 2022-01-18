@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,13 +14,3 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', static function () {
-    return view('welcome');
-});
-
-Route::get('/nguyen', static function () {
-    return ['nguyen', 'pro'];
-});
-
-Route::get('/home', 'HomeController@show');

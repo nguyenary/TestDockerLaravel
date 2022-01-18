@@ -3,18 +3,22 @@ version: '3'
 services:
     php:
         container_name: my_php
-        image: php:7.4-fpm
+        build:
+            context: .
+            dockerfile: ./docker/php/Dockerfile
         networks:
             - default
         volumes:
             - ./:/var/www
         working_dir: /var/www
+        depends_on:
+            - mysql
         expose:
             - '9000'
-    
+
     mysql:
         container_name: my_mysql
-        image: mysql:5.7
+        image: mariadb:10.1.24
         restart: always
         environment:
             MYSQL_DATABASE: 'db'
@@ -24,10 +28,11 @@ services:
             MYSQL_ROOT_HOST: '%'
         ports:
             - '3307:3306'
-        expose:
-            - '3306'
         volumes:
-            - ./my-db:/var/lib/mysql
+            - database:/var/lib/mysql
+        networks:
+            - default
+
     phpmyadmin:
         container_name: phpmyadmin
         image: phpmyadmin/phpmyadmin:latest
@@ -41,6 +46,7 @@ services:
             PMA_USER: 'user'
             PMA_PASSWORD: 'password'
         restart: always
+
     nginx:
         container_name: my_nginx
         networks:
@@ -57,3 +63,7 @@ services:
 networks:
     default:
         driver: bridge
+
+volumes:
+    database:
+        driver: local
