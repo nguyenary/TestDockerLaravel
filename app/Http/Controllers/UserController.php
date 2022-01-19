@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\CreateUserDTO;
+use App\Services\UserServiceInterface;
+use App\Validations\CreateUserValidator;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Query\Builder;
@@ -9,43 +12,38 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\JsonResponse;
 
-class Users extends Controller
+/**
+ * Class UserController
+ * @package App\Http\Controllers
+ */
+class UserController extends Controller
 {
-    private const GENDERS = ['none', 'male', 'female'];
-
     /**
-     * Create user
      * @param Request $request
-     * @return Application|\Illuminate\Http\Response|ResponseFactory
+     * @param CreateUserValidator $validator
+     * @param UserServiceInterface $userService
+     * @return JsonResponse
      */
-    public function create(Request $request)
+    public function create(
+        Request $request,
+        CreateUserValidator $validator,
+        UserServiceInterface $userService
+    ): JsonResponse
     {
-        $rules = [
-            'first_name' => 'max:20',
-            'last_name' => 'max:20',
-            'phone' => 'min:10|max:11',
-            'email' => 'email|unique:users',
-            'address' => 'max:255',
-            'gender' => 'in:' . implode(',', static::GENDERS),
-        ];
+        $validator->validate($request);
+        $user = $userService->create(new CreateUserDTO($request->all()));
 
-        $validation = Validator::make($request->all(), $rules);
-
-        if ($validation->fails()) {
-            return response(['errors' => $validation->errors()], Response::HTTP_BAD_REQUEST);
-        }
-
-        $column = array_keys($rules);
-        $params = array_combine($column, array_map(function ($column) use ($request) {
-            return $request->get($column);
-        }, $column));
-
-        $user_id = DB::table('users')->insertGetId($params);
-
-        return array_merge(['id' => $user_id], $params);
+        return response()->json($user);
     }
 
+
+
+
+    
+
+    //TODO continue implement
     /**
      * GET user info
      * @param int $id
@@ -53,6 +51,8 @@ class Users extends Controller
      */
     public function get(int $id)
     {
+
+        //TODO remove this logic to UserService
         $user = Db::table('users')->find($id);
 
         if (!$user) {
@@ -70,6 +70,7 @@ class Users extends Controller
      */
     public function update(Request $request, int $id)
     {
+        // TODO remove this logic to validator
         $rules = [
             'first_name' => 'max:20',
             'last_name' => 'max:20',
@@ -85,6 +86,7 @@ class Users extends Controller
             return response(['errors' => $validation->errors()], Response::HTTP_BAD_REQUEST);
         }
 
+        // TODO remove this logic to UserService
         $user = Db::table('users')->find($id);
 
         if (!$user) {
@@ -119,6 +121,7 @@ class Users extends Controller
      */
     public function delete(int $id)
     {
+        //TODO same with above
         $user = Db::table('users')->find($id);
 
         if (!$user) {
