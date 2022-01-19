@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/users', 'Users@create');
+Route::post('/users', 'UserController@create');
 
-Route::get('/users/{id}', 'Users@get')->where('id', '[\d]+');
+Route::get('/users/{id}', 'UserController@get')->where('id', '[\d]+');
 
-Route::put('/users/{id}', 'Users@update')->where('id', '[\d]+');
+Route::put('/users/{id}', 'UserController@update')->where('id', '[\d]+');
 
-Route::delete('/users/{id}', 'Users@delete')->where('id', '[\d]+');
+Route::delete('/users/{id}', 'UserController@delete')->where('id', '[\d]+');
