@@ -37,7 +37,9 @@ class Users extends Controller
         }
 
         $column = array_keys($rules);
-        $params = array_combine($column, array_map(fn ($column) => $request->get($column), $column));
+        $params = array_combine($column, array_map(function ($column) use ($request) {
+            return $request->get($column);
+        }, $column));
 
         $user_id = DB::table('users')->insertGetId($params);
 
@@ -100,7 +102,9 @@ class Users extends Controller
             }
         }
 
-        $params = array_combine($array_keys, array_map(fn ($column) => $request->get($column), $array_keys));
+        $params = array_combine($array_keys, array_map(function ($column) use ($request) {
+            return $request->get($column);
+        }, $array_keys));
 
         DB::table('users')->where('id', '=', $id)->update($params);
 
