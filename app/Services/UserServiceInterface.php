@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\DTOs\CreateUserDTO;
+use App\DTOs\UpdateUserDTO;
 
 /**
  * Interface UserServiceInterface
@@ -24,10 +25,10 @@ interface UserServiceInterface
 
     /**
      * @param int $userId
-     * @param CreateUserDTO $userData
+     * @param UpdateUserDTO $userData
      * @return array
      */
-    public function update(int $userId, CreateUserDTO $userData): array;
+    public function update(int $userId, UpdateUserDTO $userData): array;
 
     /**
      * @param int $userId

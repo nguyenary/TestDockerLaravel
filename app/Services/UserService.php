@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\DTOs\CreateUserDTO;
+use App\DTOs\UpdateUserDTO;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -30,21 +31,25 @@ class UserService implements UserServiceInterface
 
     /**
      * @param int $userId
-     * @return array|Builder|ValidationException|mixed
+     * @return array
      */
     public function show(int $userId): array
     {
         $user = Db::table('users')->find($userId);
+
+        if (!$user) {
+            return [];
+        }
 
         return (array) $user;
     }
 
     /**
      * @param int $userId
-     * @param CreateUserDTO $userData
+     * @param UpdateUserDTO $userData
      * @return array
      */
-    public function update(int $userId, CreateUserDTO $userData): array
+    public function update(int $userId, UpdateUserDTO $userData): array
     {
         DB::table('users')->where('id', '=', $userId)->update($userData->toArray());
 
@@ -60,6 +65,10 @@ class UserService implements UserServiceInterface
     public function delete(int $userId): array
     {
         $user = $this->show($userId);
+
+        if (!$user) {
+            return [];
+        }
 
         Db::table('users')->delete($userId);
 

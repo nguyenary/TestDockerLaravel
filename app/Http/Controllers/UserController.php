@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\CreateUserDTO;
+use App\DTOs\UpdateUserDTO;
 use App\Services\UserServiceInterface;
 use App\Validations\CreateUserValidator;
 use App\Validations\UpdateUserValidator;
-use App\Validations\UserIdValidator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
@@ -38,18 +38,14 @@ class UserController extends Controller
 
     /**
      * @param int $userId
-     * @param UserIdValidator $validator
      * @param UserServiceInterface $userService
      * @return JsonResponse
-     * @throws ValidationException
      */
     public function show(
         int $userId,
-        UserIdValidator $validator,
         UserServiceInterface $userService
     ): JsonResponse
     {
-        $validator->validate($userId);
         $user = $userService->show($userId);
 
         return response()->json($user);
@@ -71,25 +67,21 @@ class UserController extends Controller
     ): JsonResponse
     {
         $validator->validate($request);
-        $user = $userService->update($userId, new CreateUserDTO($request->all()));
+        $user = $userService->update($userId, new UpdateUserDTO($request->all()));
 
         return response()->json($user);
     }
 
     /**
      * @param int $userId
-     * @param UserIdValidator $validator
      * @param UserServiceInterface $userService
      * @return JsonResponse
-     * @throws ValidationException
      */
     public function delete(
         int $userId,
-        UserIdValidator $validator,
         UserServiceInterface $userService
     ): JsonResponse
     {
-        $validator->validate($userId);
         $user = $userService->delete($userId);
 
         return response()->json($user);

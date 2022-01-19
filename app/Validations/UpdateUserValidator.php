@@ -2,6 +2,7 @@
 
 namespace App\Validations;
 
+use App\Common\Constants\UserConstant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -12,8 +13,6 @@ use Illuminate\Validation\ValidationException;
  */
 class UpdateUserValidator
 {
-    private const GENDERS = ['male', 'female'];
-
     /**
      * @return string[]
      */
@@ -25,7 +24,7 @@ class UpdateUserValidator
             'phone' => 'min:10|max:11',
             'email' => 'email',
             'address' => 'max:255',
-            'gender' => 'in:' . implode(',', static::GENDERS),
+            'gender' => 'in:' . implode(',', UserConstant::GENDERS),
         ];
     }
 
