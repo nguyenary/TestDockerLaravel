@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\DTOs\CreateUserDTO;
-use App\Models\User;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -57,7 +56,6 @@ class UserService implements UserServiceInterface
     /**
      * @param int $userId
      * @return array
-     * @throws ValidationException
      */
     public function delete(int $userId): array
     {
