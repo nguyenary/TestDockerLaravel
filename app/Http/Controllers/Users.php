@@ -15,6 +15,7 @@ class Users extends Controller
     private const GENDERS = ['none', 'male', 'female'];
 
     /**
+     * Create user
      * @param Request $request
      * @return array|Application|ResponseFactory|\Illuminate\Http\Response
      */
@@ -44,6 +45,7 @@ class Users extends Controller
     }
 
     /**
+     * GET user info
      * @param int $id
      * @return Application|ResponseFactory|Builder|\Illuminate\Http\Response|mixed
      */
@@ -59,6 +61,7 @@ class Users extends Controller
     }
 
     /**
+     * Update user info
      * @param Request $request
      * @param int $id
      * @return Application|ResponseFactory|Builder|\Illuminate\Http\Response|mixed
@@ -69,6 +72,7 @@ class Users extends Controller
             'first_name' => 'max:20',
             'last_name' => 'max:20',
             'phone' => 'min:10|max:11',
+            'email' => 'email|unique:users',
             'address' => 'max:255',
             'gender' => 'in:' . implode(',', static::GENDERS),
         ];
@@ -105,6 +109,7 @@ class Users extends Controller
 
 
     /**
+     * Delete user by id
      * @param int $id
      * @return Application|ResponseFactory|Builder|\Illuminate\Http\Response|mixed
      */
