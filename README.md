@@ -11,10 +11,10 @@ docker-compose up -d
 composer install
 ```
 
-### Import Database
+You need to configure the `.env` file
+
+### Finally, Import Database
 
 ```
 php artisan make:migration
 ```
-
-Finally, you need to configure the `.env` file
