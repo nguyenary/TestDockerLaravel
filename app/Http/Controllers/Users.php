@@ -17,7 +17,7 @@ class Users extends Controller
     /**
      * Create user
      * @param Request $request
-     * @return array|Application|ResponseFactory|\Illuminate\Http\Response
+     * @return Application|\Illuminate\Http\Response|ResponseFactory
      */
     public function create(Request $request)
     {
