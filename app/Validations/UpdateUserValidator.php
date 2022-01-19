@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
  * Class CreateUserValidator
  * @package App\Validations
  */
-class CreateUserValidator
+class UpdateUserValidator
 {
     private const GENDERS = ['male', 'female'];
 
@@ -23,7 +23,7 @@ class CreateUserValidator
             'first_name' => 'max:20',
             'last_name' => 'max:20',
             'phone' => 'min:10|max:11',
-            'email' => 'email|unique:users',
+            'email' => 'email',
             'address' => 'max:255',
             'gender' => 'in:' . implode(',', static::GENDERS),
         ];

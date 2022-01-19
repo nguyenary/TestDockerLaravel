@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/users', 'UserController@create');
 
-Route::get('/users/{id}', 'UserController@get')->where('id', '[\d]+');
+Route::get('/users/{id}', 'UserController@show')->where('id', '[\d]+');
 
 Route::put('/users/{id}', 'UserController@update')->where('id', '[\d]+');
 

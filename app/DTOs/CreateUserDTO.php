@@ -10,10 +10,10 @@ class CreateUserDTO
 {
     private string $firstName;
     private string $lastName;
-    private string $address;
     private string $phone;
-
-    //TODO...
+    private string $email;
+    private string $address;
+    private string $gender;
 
     /**
      * CreateUserDTO constructor.
@@ -29,14 +29,30 @@ class CreateUserDTO
      */
     public function map(array $inputData): void
     {
-        $this->firstName = $inputData['first_name'];
-        //TODO ....
+        $this->firstName = $inputData['first_name'] ?? '';
+        $this->lastName = $inputData['last_name'] ?? '';
+        $this->phone = $inputData['phone'] ?? '';
+        $this->email = $inputData['email'] ?? '';
+        $this->address = $inputData['address'] ?? '';
+        $this->gender = $inputData['gender'] ?? '';
+    }
+
+    public function toArray(): array
+    {
+        return array_filter([
+            'first_name' => $this->getFirstName(),
+            'last_name' => $this->getLastName(),
+            'phone' => $this->getPhone(),
+            'email' => $this->getEmail(),
+            'address' => $this->getAddress(),
+            'gender' => $this->getGender(),
+        ]);
     }
 
     /**
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
@@ -52,7 +68,7 @@ class CreateUserDTO
     /**
      * @return string
      */
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
@@ -68,7 +84,39 @@ class CreateUserDTO
     /**
      * @return string
      */
-    public function getAddress(): string
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone(string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress(): ?string
     {
         return $this->address;
     }
@@ -84,16 +132,16 @@ class CreateUserDTO
     /**
      * @return string
      */
-    public function getPhone(): string
+    public function getGender(): ?string
     {
-        return $this->phone;
+        return $this->gender;
     }
 
     /**
-     * @param string $phone
+     * @param string $gender
      */
-    public function setPhone(string $phone): void
+    public function setGender(string $gender): void
     {
-        $this->phone = $phone;
+        $this->gender = $gender;
     }
 }

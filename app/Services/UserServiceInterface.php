@@ -20,8 +20,18 @@ interface UserServiceInterface
      * @param int $userId
      * @return array
      */
-    public function show(int $userId): array;
+    public function show(int $userId): ?array;
 
-    public function update();
-    public function delete();
+    /**
+     * @param int $userId
+     * @param CreateUserDTO $userData
+     * @return array
+     */
+    public function update(int $userId, CreateUserDTO $userData): array;
+
+    /**
+     * @param int $userId
+     * @return array
+     */
+    public function delete(int $userId): array;
 }
