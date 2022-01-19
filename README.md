@@ -1,4 +1,4 @@
-# Setup Environment
+# Environment Setup
 
 ### Run docker
 ```
