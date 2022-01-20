@@ -4,9 +4,7 @@ namespace App\Services;
 
 use App\DTOs\CreateUserDTO;
 use App\DTOs\UpdateUserDTO;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
 
 /**
  * Class UserService
